@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .books {
+            border: 1px solid steelblue;
+            width: 500px;
+            border-collapse: collapse;
+        }
+
+        #firstBookColumn {
+        width: 300px;
+        }
+
+        #secondBookColumn {
+        width: 100px;
+        }
+
+        #thirdBookColumn {
+        width: 100px;
+        }
+
+        .books tr td, th {
+            word-break: break-word;
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .comments {
+            border: 1px solid steelblue;
+            width: 500px;
+            border-collapse: collapse;
+        }
+
+        #firstColumn {
+        width: 350px;
+        }
+
+        .comments tr td, th {
+            word-break: break-word;
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+    </style>
+</head>
+<body>
+<h3>Book:</h3>
+
+<table class="books">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Genre</th>
+    </tr>
+    </thead>
+    <tbody>
+    <td id="firstBookColumn" th:text="${book.name}">We</td>
+    <td id="secondBookColumn" th:text="${book.author.name}">Zamiatin</td>
+    <td id="thirdBookColumn" th:text="${book.genre.name}">Fantasy</td>
+    </tbody>
+</table>
+
+<br><br>
+
+<div th:if="${not #lists.isEmpty(comments)}">
+    <h3>Comments:</h3>
+    <table class="comments">
+        <thead>
+        <tr>
+            <th>Comment</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comment : ${comments}">
+            <td id="firstColumn" th:text="${comment.comment}">Good job</td>
+            <td>
+                <form method="GET" th:action="@{/comments/edit}">
+                    <button type="submit" name="id" value="value" th:value="${comment.id}" class="link-button">Edit
+                    </button>
+                </form>
+            </td>
+            <td>
+                <form method="POST" th:action="@{/comments/delete}">
+                    <input type="hidden" name="id" value="value" th:value="${comment.id}"/>
+                    <button type="submit" name="bookId" value="value" th:value="${book.id}" class="link-button">Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<br><br>
+<button onclick="window.location.href='/comments/create'; "
+        th:onclick="'window.location.href= \'' + @{/comments/create(bookId=${book.id})} + '\''" type="button">Add comment
+</button>
+<br><br>
+<button onclick="window.location.href='/books'" type="button">Exit</button>
+
+</body>
+</html>

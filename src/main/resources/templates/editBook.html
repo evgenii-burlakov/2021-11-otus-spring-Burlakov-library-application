@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+</head>
+<body>
+
+<form id="edit-form" action="edit.html" th:action="@{/books/edit(id=${book.id})}" th:method="post" th:object="${book}">
+    <h3>Book Info:</h3>
+
+    <div class="row">
+        <label for="book-name-input">Name:</label>
+        <input id="book-name-input" name="name" type="text" th:value="*{name}" value="Evgenii Onegin"/>
+    </div>
+
+    <div class="row">
+        <label for="author-name">Author:</label>
+        <select id="author-name" name="author.name" required="required" th:field="*{author.name}">
+            <option th:each="author : ${authors}" th:text="${author.name}" th:value="${author.name}">
+            </option>
+        </select>
+    </div>
+
+    <div class="row">
+        <label for="genre-name">Genre:</label>
+        <select id="genre-name" name="genre.name" required="required" th:field="*{genre.name}">
+            <option th:each="genre : ${genres}" th:text="${genre.name}" th:value="${genre.name}" >
+            </option>
+        </select>
+    </div>
+
+    <br><br>
+
+    <div class="row">
+        <button type="submit">Save</button>
+        <button onclick="window.location.href='/books'" type="button">Cancel</button>
+    </div>
+</form>
+
+</body>
+</html>

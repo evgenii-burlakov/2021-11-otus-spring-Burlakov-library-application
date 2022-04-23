@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Authors</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .authors {
+            border: 1px solid steelblue;
+            width: 500px;
+            border-collapse: collapse;
+        }
+
+        #firstColumn {
+        width: 350px;
+        }
+
+        .authors tr td, th {
+            word-break: break-word;
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+    </style>
+</head>
+<body>
+
+<div th:if="${not #lists.isEmpty(authors)}">
+    <h3>Authors:</h3>
+    <table class="authors">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="author : ${authors}">
+            <td id="firstColumn" th:text="${author.name}">Lermontov</td>
+            <td>
+                <form method="GET" th:action="@{/authors/edit}">
+                    <button type="submit" name="id" value="value" th:value="${author.id}" class="link-button">Edit</button>
+                </form>
+            </td>
+            <td>
+                <form method="POST" th:action="@{/authors/delete}">
+                    <button type="submit" name="id" value="value" th:value="${author.id}" class="link-button">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<br><br>
+<button onclick="window.location.href='/authors/create'; " type="button">Add author</button>
+<br><br>
+<button onclick="window.location.href='/'; " type="button">Exit</button>
+
+</body>
+</html>

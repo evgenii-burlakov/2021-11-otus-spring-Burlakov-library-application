@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Genres</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .genres {
+            border: 1px solid steelblue;
+            width: 500px;
+            border-collapse: collapse;
+        }
+
+        #firstColumn {
+        width: 350px;
+        }
+
+        .genres tr td, th {
+            word-break: break-word;
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+    </style>
+</head>
+<body>
+
+<div th:if="${not #lists.isEmpty(genres)}">
+    <h3>Genres:</h3>
+    <table class="genres">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="genre : ${genres}">
+            <td id="firstColumn" th:text="${genre.name}">Novel</td>
+            <td>
+                <form method="GET" th:action="@{/genres/edit}">
+                    <button type="submit" name="id" value="value" th:value="${genre.id}" class="link-button">Edit</button>
+                </form>
+            </td>
+            <td>
+                <form method="POST" th:action="@{/genres/delete}">
+                    <button type="submit" name="id" value="value" th:value="${genre.id}" class="link-button">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<br><br>
+<button onclick="window.location.href='/genres/create'; " type="button">Add genre</button>
+<br><br>
+<button onclick="window.location.href='/'; " type="button">Exit</button>
+
+</body>
+</html>

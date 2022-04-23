@@ -32,8 +32,9 @@
 
         <!--DB-->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -72,6 +73,13 @@
         </dependency>
 
         <dependency>
+            <scope>test</scope>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+
+        <dependency>
+            <scope>test</scope>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <version>${spring-security.version}</version>
@@ -94,6 +102,8 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <finalName>library-application</finalName>
     </build>
 
 </project>

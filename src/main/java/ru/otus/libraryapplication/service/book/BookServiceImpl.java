@@ -1,5 +1,6 @@
 package ru.otus.libraryapplication.service.book;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional(readOnly = true)
+    @HystrixCommand(commandKey = "getAllBooks", fallbackMethod = "getEmptyBooksList")
     public List<Book> getAll() {
         return bookRepository.findAll();
     }
@@ -96,5 +98,9 @@ public class BookServiceImpl implements BookService {
             return authorService.create(author);
         }
         return bookAuthor;
+    }
+
+    public List<Book> getEmptyBooksList() {
+        return List.of();
     }
 }
